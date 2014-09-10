@@ -1,0 +1,21 @@
+//server 未加数据库
+gcc -g -Wall -L /usr/local/lib -lev sock.h evServer.c common.h -o evserver
+
+//加上数据库
+g++ -g -Wall -lmysqlclient -lpthread -L /usr/local/lib -lev mysql_encap.cpp mysql_encap.h conn_pool.cpp conn_pool.h  sock.h evServer.c common.h -o evserver2
+
+//加上线程池
+g++ -g -Wall -lmysqlclient -lpthread -L /usr/local/lib -lev thread_pool.c thread_pool.h  mysql_encap.cpp mysql_encap.h conn_pool.cpp conn_pool.h  sock.h evServer.c common.h -o evserver2
+
+//加sha1.h 需要了
+//g++ -g -Wall -lmysqlclient -lpthread -L /usr/local/lib -lev thread_pool.c thread_pool.h  mysql_encap.cpp mysql_encap.h conn_pool.cpp conn_pool.h sha1.h sha1.c sock.h evServer.c common.h -o evserver2*/
+
+
+g++ -g -Wall -lmysqlclient -lpthread -L /usr/local/lib -lev thread_pool.c thread_pool.h  mysql_encap.cpp mysql_encap.h conn_pool.cpp conn_pool.h  sock.h sha1.h sha1.c files.h evServer.c common.h common.c -o evserver2
+
+
+
+//client
+gcc -g -Wall sock.h client.c -o evclient
+g++ -g -Wall -lmysqlclient -lpthread -L /usr/local/lib client.c sock.h sha1.c sha1.h common.h common.c mysql_encap.cpp mysql_encap.h files.h -o evclient2
+

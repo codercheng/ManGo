@@ -1,0 +1,3 @@
+gcc -g -Wall sha1.c sha.h testsha1.c -o testsha
+
+./testsha a.txt

@@ -1,0 +1,27 @@
+create table repository (id int auto_increment primary key, name varchar(256) not null);
+	----------------------------------------------------
+	insert into repository values(NULL, 'test1');
+	insert into repository values(NULL, 'test2');
+	select * from repository;
+	select id from repository where name = 'test2';
+	------------------------------------------------------
+
+create table item (	itemId int auto_increment primary key, version int not null, sha1 char(41) not null, path varchar(256) not null, m_time bigint);
+
+	----------------------------------------------------
+	insert into item values(NULL, 1, 'flafsdakfjsiahfuishdiuf', 'test.c', 12321847);
+	
+	select * from item where itemId = 1;
+	------------------------------------------------------
+		
+create table history (	historyId int auto_increment primary key, itemId int not null, version int not null, sha1 char(41) not null, path varchar(256) not null, m_time bigint, user varchar(20) not null, action int not null, commitGroup int not null);
+
+create table tag(tagId int auto_increment primary key, tagName char(40) not null, itemId int not null, version int not null);
+insert into testdb.tag values(NULL, '%s', %s, %s);
+insert into testdb.tag values(NULL, 'testTag', 90, 2);
+
+alter table testdb.tag add column path varchar(256) not null after itemId;
+
+alter table t1 add column addr varchar(20) not null after user1;
+
+

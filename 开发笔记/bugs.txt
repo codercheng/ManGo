@@ -1,0 +1,5 @@
+1. send: Resource temporarily unavailable
+    "Resource temporarily unavailable" is the error message corresponding to EAGAIN, which means that the operation would have blocked but 		nonblocking operation was requested.
+    程序在传送文件的时候，我需要的是非阻塞的传送，但是在evServer.c中却把accept之后的sockfd设置为了non-blocking,也就会返回EAGAIN。
+    
+2. 传送大文件时候的bufsize设置的太小，这个东西最后统一设置在配置文件

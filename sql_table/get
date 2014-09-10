@@ -1,0 +1,48 @@
+//get subfolder and files
+select itemId, max(version)version from history where pItemId = 73 and historyId < 2111 group by itemId;
+
+得到itemId之后，怎么拿，传文件，这个还是要文件的路径名，所以现在的历史表中是没有存在文件名，所以需要item表，刚好直接在select
+//folder and by latest version
+select historyId, itemId, pItemId, max(version) from testdb.history where pItemId = 73 group by itemId;
+
+//folder and by history version
+select t1.itemId, t1.path, t2.version from item t1 
+inner join 
+(select itemId, max(version)version from history where pItemId = 73 and historyId < 2111 group by itemId)t2 
+on t1.itemId = t2.itemId;
+
+================== Folder =========================================================================
+//
+i use the sha1 to differentiate folder and file
+//
+by latest version
+{
+	//getSubFile 
+	//select path, max(version)version from testdb.history where pItemId = 73 and sha1 != '0' group by itemId;
+	select path, version from testdb.item where pItemId = 73 and sha1 != '0';
+	
+	//getSubFolder
+	//select path, max(version)version from testdb.history where pItemId = 73 and sha1 ='0' group by itemId
+	select path from testdb.item where pItemId = 73 and sha1 = '0';
+	
+	finally, recursively...
+}
+
+by history version
+{
+	//get history id, itemId(as pItemId below)
+	select historyId, itemId from testdb.history where path = 'folder1' and version = 7;
+	
+	
+	//getSubFile
+	select path, max(version)version from testdb.history where pItemId = 73 and historyId < 2109 and sha1 != '0' group by itemId;
+	 
+	attention:  the historyId will not change, it is always the init folder's historyId; have nothing to do with the subfolder
+	//getSubFolder
+	select itemId, path, max(version)version from testdb.history where pItemId = 73 and historyId < 2109 and sha1 = '0' group by itemId;
+	
+	
+	finally, recursively...
+}
+
+现在得到了itemId， 路径名 和版本信息，，其实我们只需要path：：version 组成数组

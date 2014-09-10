@@ -1,0 +1,8 @@
+#include <unistd.h>
+
+int main(){
+	chroot(".");
+	chdir("/");
+	execlp("/bin/sh",NULL);
+	return 0;
+}
